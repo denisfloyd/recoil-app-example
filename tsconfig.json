@@ -1,21 +1,46 @@
 {
+  /******************** Root Fields ********************/
+  "compileOnSave": true,
+  "include": ["src/**/*", "@types/**/*"],
+  "exclude": ["node_modules", "**/node_modules/*", "build"],
+  "references": [{ "path": "./tsconfig.node.json" }],
+
   "compilerOptions": {
-    "target": "ESNext",
-    "useDefineForClassFields": true,
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "allowJs": false,
-    "skipLibCheck": true,
-    "esModuleInterop": false,
+    "target": "esnext",
+    // :::: module :::: //
+    "module": "esnext",
+    "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "module": "ESNext",
-    "moduleResolution": "Node",
     "resolveJsonModule": true,
+    "esModuleInterop": true,
+    // :::: React :::: //
+    "jsx": "react-jsx",
+    // :::: JS :::: //
+    "allowJs": true,
+    "checkJs": false,
+    // :::: Lint :::: //
+    "strict": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": false,
+    "strictNullChecks": true,
+    // :::: More spec :::: //
+    "lib": ["dom", "dom.iterable", "esnext"],
+    // :::: Sorcemap :::: //
+    "sourceMap": false,
+    // :::: Etc :::: //
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
     "isolatedModules": true,
+    // :::: Detail :::: //
+    "disableSizeLimit": true,
+    "forceConsistentCasingInFileNames": false,
+    "incremental": true,
+    // :::: Outfile :::: //
+    "removeComments": true,
     "noEmit": true,
-    "jsx": "react-jsx"
-  },
-  "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+    // :::: path :::: //
+    "baseUrl": "./src",
+    "paths": {},
+    "typeRoots": ["@types", "./node_modules/@types"]
+  }
 }
