@@ -1,18 +1,25 @@
-import useProducts from 'hooks/useProducts';
-import { useState } from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
+import { Outlet, Route, Routes } from 'react-router-dom';
+
+import Products from 'pages/Products';
 
 function App() {
-  const [count, setCount] = useState(0);
+  return (
+    <Routes>
+      <Route path="/" element={<LayoutRoot />}>
+        <Route index element={<Products />} />
+        <Route path="*" element={<Products />} />
+      </Route>
+    </Routes>
+  );
+}
 
-  const { data: products, isFetching } = useProducts();
-
+function LayoutRoot() {
   return (
     <Wrapper>
-      {isFetching && <span>loading...</span>}
-      {products && products.map(product => <span>{product.title}</span>)}
+      <Outlet />
     </Wrapper>
-  );
+  )
 }
 
 const Wrapper = styled.div`
