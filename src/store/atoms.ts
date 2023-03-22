@@ -5,3 +5,8 @@ export const productsState = atom<Product[]>({
   key: "productsState",
   default: [],
 });
+
+// export const cartState = atom<Product[]>({
+//   key: "productsState",
+//   default: [],
+// });
