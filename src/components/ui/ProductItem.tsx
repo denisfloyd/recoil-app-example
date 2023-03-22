@@ -1,3 +1,5 @@
+import { useRecoilValue } from 'recoil';
+import { dispatcherState } from 'store/atoms';
 import styled from 'styled-components';
 import { Product } from 'types/product';
 
@@ -23,11 +25,17 @@ interface Props {
 }
 
 const ProductItem = ({ product }: Props) => {
+  const dispatcher = useRecoilValue(dispatcherState);
+
   const price = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'BRL',
     minimumFractionDigits: 2,
   }).format(product.price);
+
+  const handleAddProductToCart = () => {
+    dispatcher?.addProductToCart(product);
+  };
 
   return (
     <Container>
@@ -35,7 +43,7 @@ const ProductItem = ({ product }: Props) => {
 
       <Content>
         <span>{price}</span>
-        <button>Buy</button>
+        <button onClick={handleAddProductToCart}>Buy</button>
       </Content>
     </Container>
   );

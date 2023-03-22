@@ -1,9 +1,20 @@
+import { useEffect, useRef } from 'react';
+import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { Outlet, Route, Routes } from 'react-router-dom';
 
 import Products from 'pages/Products';
+import { createDispatcher, Dispatcher } from 'store/dispatcher';
+import { dispatcherState } from 'store/atoms';
 
 function App() {
+  const setDispatcher = useSetRecoilState(dispatcherState);
+
+  const dispatcherRef = useRef<Dispatcher>(createDispatcher());
+  useEffect(() => {
+    setDispatcher(dispatcherRef.current);
+  }, []);
+
   return (
     <Routes>
       <Route path="/" element={<LayoutRoot />}>
@@ -19,7 +30,7 @@ function LayoutRoot() {
     <Wrapper>
       <Outlet />
     </Wrapper>
-  )
+  );
 }
 
 const Wrapper = styled.div`
