@@ -1,7 +1,8 @@
 import { useRecoilValue } from 'recoil';
-import { dispatcherState } from 'store/atoms';
 import styled from 'styled-components';
-import { Product } from 'types/product';
+
+import { dispatcherState } from '@/store/atoms';
+import { Product } from '@/types/product';
 
 const Container = styled.div`
   width: 300px;

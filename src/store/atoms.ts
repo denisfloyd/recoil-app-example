@@ -1,6 +1,7 @@
-import { Cart } from './../types/cart';
 import { atom } from 'recoil';
-import { Product } from 'types/product';
+
+import { Cart } from '@/types/cart';
+import { Product } from '@/types/product';
 import { Dispatcher } from './dispatcher';
 
 export const productsState = atom<Product[]>({

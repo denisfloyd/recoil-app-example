@@ -1,9 +1,9 @@
-import ProductItem from 'components/ui/ProductItem';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-
-import useProducts from 'hooks/useProducts';
-import { cartState, productsState } from 'store/atoms';
 import styled from 'styled-components';
+
+import ProductItem from '@/components/ui/ProductItem';
+import useProducts from '@/hooks/useProducts';
+import { cartState, productsState } from '@/store/atoms';
 
 const Container = styled.section`
   display: grid;
@@ -27,6 +27,6 @@ const Products = () => {
       </Container>
     </>
   );
-};;
+};
 
 export default Products;

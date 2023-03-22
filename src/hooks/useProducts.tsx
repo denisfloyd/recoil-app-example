@@ -1,8 +1,8 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import axios, { AxiosResponse } from 'axios';
 import { SetterOrUpdater } from 'recoil';
-import { api } from 'services/api';
-import { Product } from 'types/product';
+import { api } from '@/services/api';
+import { Product } from '@/types/product';
 
 const getProducts = async (dispatch: SetterOrUpdater<Product[]>) => {
   const { data: products } = await api.get<AxiosResponse<Product[]>>('/products');

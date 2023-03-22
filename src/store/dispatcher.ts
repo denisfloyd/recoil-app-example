@@ -1,5 +1,6 @@
 import { useRecoilCallback } from 'recoil';
-import { Product } from 'types/product';
+
+import { Product } from '@/types/product';
 import { cartState } from './atoms';
 
 export const createDispatcher = () => {

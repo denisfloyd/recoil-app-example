@@ -3,9 +3,9 @@ import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { Outlet, Route, Routes } from 'react-router-dom';
 
-import Products from 'pages/Products';
-import { createDispatcher, Dispatcher } from 'store/dispatcher';
-import { dispatcherState } from 'store/atoms';
+import Products from '@/pages/Products';
+import { createDispatcher, Dispatcher } from '@/store/dispatcher';
+import { dispatcherState } from '@/store/atoms';
 
 function App() {
   const setDispatcher = useSetRecoilState(dispatcherState);
