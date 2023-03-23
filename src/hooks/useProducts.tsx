@@ -14,9 +14,8 @@ export default function useProducts(
   dispatch: SetterOrUpdater<Product[]>,
 ): UseQueryResult<Product[], unknown> {
   return useQuery(['products'], () => getProducts(dispatch), {
-    refetchInterval: 1000 * 60 * 5,
     refetchOnWindowFocus: false,
-    refetchOnMount: true,
+    refetchOnMount: false,
     refetchIntervalInBackground: false,
   });
 }

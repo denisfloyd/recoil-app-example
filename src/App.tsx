@@ -6,6 +6,8 @@ import { Outlet, Route, Routes } from 'react-router-dom';
 import Products from '@/pages/Products';
 import { createDispatcher, Dispatcher } from '@/store/dispatcher';
 import { dispatcherState } from '@/store/atoms';
+import NavigationBar from './components/ui/NavigationBar';
+import Cart from './pages/Cart';
 
 function App() {
   const setDispatcher = useSetRecoilState(dispatcherState);
@@ -16,12 +18,16 @@ function App() {
   }, []);
 
   return (
-    <Routes>
-      <Route path="/" element={<LayoutRoot />}>
-        <Route index element={<Products />} />
-        <Route path="*" element={<Products />} />
-      </Route>
-    </Routes>
+    <>
+      <NavigationBar />
+      <Routes>
+        <Route path="/" element={<LayoutRoot />}>
+          <Route index element={<Products />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="*" element={<Products />} />
+        </Route>
+      </Routes>
+    </>
   );
 }
 
