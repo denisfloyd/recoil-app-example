@@ -1,16 +1,21 @@
 import { useRecoilCallback } from 'recoil';
 
 import { Product } from '@/types/product';
+import { Cart } from '@/types/cart';
 import { cartState } from './atoms';
+
+const calculateTotalCartPrice = (products: Cart['products']): number => {
+  return Object.values(products).reduce((total, product) => total + product.totalProduct, 0);
+};
 
 export const createDispatcher = () => {
   const addProductToCart = useRecoilCallback(
     ({ snapshot, set }) =>
       async (productPayload: Product) => {
         let cart = await snapshot.getPromise(cartState);
-        const foundProduct = cart.products[productPayload.id];
+        let foundProduct = cart.products[productPayload.id];
 
-        const newProduct = {
+        const productToAddOrEditInCart = {
           ...(foundProduct
             ? {
                 quantity: foundProduct.quantity + 1,
@@ -19,12 +24,15 @@ export const createDispatcher = () => {
             : { quantity: 1, totalProduct: productPayload.price }),
         };
 
+        const newProducts = {
+          ...cart.products,
+          [productPayload.id]: productToAddOrEditInCart,
+        };
+
         cart = {
           ...cart,
-          products: {
-            ...cart.products,
-            [productPayload.id]: newProduct,
-          },
+          products: newProducts,
+          totalCart: calculateTotalCartPrice(newProducts),
         };
 
         set(cartState, () => cart);
