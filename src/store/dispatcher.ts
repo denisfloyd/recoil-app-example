@@ -20,8 +20,9 @@ export const createDispatcher = () => {
             ? {
                 quantity: foundProduct.quantity + 1,
                 totalProduct: foundProduct.totalProduct + productPayload.price,
+                name: foundProduct.name,
               }
-            : { quantity: 1, totalProduct: productPayload.price }),
+            : { quantity: 1, totalProduct: productPayload.price, name: productPayload.title }),
         };
 
         const newProducts = {
@@ -39,8 +40,13 @@ export const createDispatcher = () => {
       },
   );
 
+  const checkoutCart = useRecoilCallback(({ reset }) => async () => {
+    reset(cartState);
+  });
+
   return {
     addProductToCart,
+    checkoutCart,
   };
 };
 

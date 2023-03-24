@@ -1,8 +1,11 @@
+export type ProductInCart = {
+  name: string;
+  quantity: number;
+  totalProduct: number;
+};
+
 type MapProduct = {
-  [key: string]: {
-    quantity: number;
-    totalProduct: number;
-  };
+  [key: string]: ProductInCart;
 };
 
 export interface Cart {

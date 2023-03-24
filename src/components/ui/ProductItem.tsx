@@ -57,9 +57,7 @@ const ProductItem = ({ product }: Props) => {
     minimumFractionDigits: 2,
   }).format(product.price);
 
-  const handleAddProductToCart = () => {
-    dispatcher?.addProductToCart(product);
-  };
+  const handleAddProductToCart = () => dispatcher?.addProductToCart(product);
 
   return (
     <Container isHighlighted={product.quantityInCart > 0}>
