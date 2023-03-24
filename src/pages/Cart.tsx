@@ -10,6 +10,7 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
     gap: 10px;
+    padding: 0;
   }
 `;
 
@@ -25,11 +26,11 @@ const Cart = () => {
       <h1>Total Cart: {totalCartPrice}</h1>
       <ul>
         {Object.values(cart.products).map(product => (
-          <CartItem productInCart={product} />
+          <CartItem key={product.name} productInCart={product} />
         ))}
       </ul>
 
-      <button onClick={handleCheckout}>Checkout</button>
+      {cart.totalCart > 0 && <button onClick={handleCheckout}>Checkout</button>}
     </Container>
   );
 };
