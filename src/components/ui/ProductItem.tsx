@@ -1,10 +1,14 @@
 import { useRecoilValue } from 'recoil';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { dispatcherState } from '@/store/atoms';
 import { Product } from '@/types/product';
 
-const Container = styled.div`
+interface ContainerProps {
+  isHighlighted: boolean;
+}
+
+const Container = styled.div<ContainerProps>`
   width: 300px;
   border-radius: 2px;
   border: 1px solid #fff;
@@ -12,6 +16,18 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  ${props =>
+    props.isHighlighted &&
+    css`
+      border-color: #11ffaa;
+
+      p.cart-quantity {
+        color: #11ffaa;
+      }
+    `}
+
+  color: #fff;
 `;
 
 const Content = styled.div`
@@ -19,6 +35,13 @@ const Content = styled.div`
   flex-direction: column;
   justify-content: space-between;
   flex: 1;
+
+  button span {
+    background-color: #fff;
+    padding: 4px;
+    border-radius: 20px;
+    color: #000;
+  }
 `;
 
 interface Props {
@@ -39,11 +62,14 @@ const ProductItem = ({ product }: Props) => {
   };
 
   return (
-    <Container>
+    <Container isHighlighted={product.quantityInCart > 0}>
       <h3>{product.title}</h3>
+      <p className="cart-quantity">
+        In Cart: <span>{product.quantityInCart}</span>
+      </p>
 
       <Content>
-        <span>{price}</span>
+        <span>Price: {price}</span>
         <button onClick={handleAddProductToCart}>Buy</button>
       </Content>
     </Container>

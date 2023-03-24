@@ -3,7 +3,8 @@ import styled from 'styled-components';
 
 import ProductItem from '@/components/ui/ProductItem';
 import useProducts from '@/hooks/useProducts';
-import { cartState, productsState } from '@/store/atoms';
+import { productsState } from '@/store/atoms';
+import { productsListMergedWithCartState } from '@/store/selectors';
 
 const Container = styled.section`
   display: grid;
@@ -13,19 +14,14 @@ const Container = styled.section`
 
 const Products = () => {
   const setProducts = useSetRecoilState(productsState);
-  const cart = useRecoilValue(cartState);
-  const products = useRecoilValue(productsState);
+  const { products } = useRecoilValue(productsListMergedWithCartState);
   const { isFetching } = useProducts(setProducts);
 
   return (
-    <>
-      {JSON.stringify(cart)}
-      <Container>
-        {isFetching && <span>loading...</span>}
-
-        {products && products.map(product => <ProductItem key={product.id} product={product} />)}
-      </Container>
-    </>
+    <Container>
+      {isFetching && <span>loading...</span>}
+      {products && products.map(product => <ProductItem key={product.id} product={product} />)}
+    </Container>
   );
 };
 

@@ -29,13 +29,13 @@ export const createDispatcher = () => {
           [productPayload.id]: productToAddOrEditInCart,
         };
 
-        cart = {
-          ...cart,
-          products: newProducts,
-          totalCart: calculateTotalCartPrice(newProducts),
-        };
-
-        set(cartState, () => cart);
+        set(cartState, (oldCart: Cart) => {
+          return {
+            ...oldCart,
+            products: newProducts,
+            totalCart: calculateTotalCartPrice(newProducts),
+          };
+        });
       },
   );
 
