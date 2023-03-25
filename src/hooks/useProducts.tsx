@@ -1,5 +1,5 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
-import axios, { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import { SetterOrUpdater } from 'recoil';
 import { api } from '@/services/api';
 import { Product } from '@/types/product';
