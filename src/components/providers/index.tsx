@@ -4,7 +4,7 @@ import RecoilProvider from './RecoilProvider';
 const Providers = ({ children }) => {
   return (
     <QueryProvider>
-      <RecoilProvider>{children}</RecoilProvider>
+      <RecoilProvider initRecoilState={null}>{children}</RecoilProvider>
     </QueryProvider>
   );
 };
