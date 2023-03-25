@@ -1,5 +1,7 @@
+import { Product } from './product';
+
 export type ProductInCart = {
-  name: string;
+  item: Product;
   quantity: number;
   totalProduct: number;
 };
@@ -9,6 +11,6 @@ type MapProduct = {
 };
 
 export interface Cart {
-  products: MapProduct;
+  productsInCart: MapProduct;
   totalCart: number;
 }

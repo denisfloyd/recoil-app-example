@@ -9,7 +9,7 @@ export const productsListMergedWithCartState = selector({
 
     const productsListMergedWithCart = productList.map(product => ({
       ...product,
-      quantityInCart: cart.products[product.id]?.quantity || 0,
+      quantityInCart: cart.productsInCart[product.id]?.quantity || 0,
     }));
 
     return {

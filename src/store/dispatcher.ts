@@ -1,40 +1,75 @@
 import { useRecoilCallback } from 'recoil';
 
 import { Product } from '@/types/product';
-import { Cart } from '@/types/cart';
+import { Cart, ProductInCart } from '@/types/cart';
 import { cartState } from './atoms';
-
-const calculateTotalCartPrice = (products: Cart['products']): number => {
-  return Object.values(products).reduce((total, product) => total + product.totalProduct, 0);
-};
 
 export const createDispatcher = () => {
   const addProductToCart = useRecoilCallback(
     ({ snapshot, set }) =>
       async (productPayload: Product) => {
-        let cart = await snapshot.getPromise(cartState);
-        let foundProduct = cart.products[productPayload.id];
+        const cart = await snapshot.getPromise(cartState);
+        let productFound = cart.productsInCart[productPayload.id];
 
-        const productToAddOrEditInCart = {
-          ...(foundProduct
-            ? {
-                quantity: foundProduct.quantity + 1,
-                totalProduct: foundProduct.totalProduct + productPayload.price,
-                name: foundProduct.name,
-              }
-            : { quantity: 1, totalProduct: productPayload.price, name: productPayload.title }),
-        };
+        if (productFound) {
+          return updateProductQuantityInCart(productFound, true);
+        }
 
-        const newProducts = {
-          ...cart.products,
-          [productPayload.id]: productToAddOrEditInCart,
+        set(cartState, (oldCart: Cart) => {
+          return {
+            ...oldCart,
+            productsInCart: {
+              ...oldCart.productsInCart,
+              [productPayload.id]: {
+                quantity: 1,
+                totalProduct: productPayload.price,
+                item: productPayload,
+              },
+            },
+            totalCart: oldCart.totalCart + productPayload.price,
+          };
+        });
+      },
+  );
+
+  const updateProductQuantityInCart = useRecoilCallback(
+    ({ set }) =>
+      async (productInCart: ProductInCart, isAdding: boolean) => {
+        const newQuantity = productInCart.quantity + (isAdding ? 1 : -1);
+        if (newQuantity === 0) {
+          return removeProductInCart(productInCart.item.id);
+        }
+
+        const productInCartUpdate = {
+          ...productInCart,
+          quantity: newQuantity,
+          totalProduct: newQuantity * productInCart.item.price,
         };
 
         set(cartState, (oldCart: Cart) => {
           return {
             ...oldCart,
-            products: newProducts,
-            totalCart: calculateTotalCartPrice(newProducts),
+            productsInCart: {
+              ...oldCart.productsInCart,
+              [productInCart.item.id]: productInCartUpdate,
+            },
+            totalCart: oldCart.totalCart + (isAdding ? 1 : -1) * productInCart.item.price,
+          };
+        });
+      },
+  );
+
+  const removeProductInCart = useRecoilCallback(
+    ({ snapshot, set }) =>
+      async (productId: number) => {
+        const cart = await snapshot.getPromise(cartState);
+        const { [productId]: removedProductInCart, ...updatedProductsInCart } = cart.productsInCart;
+
+        set(cartState, (oldCart: Cart) => {
+          return {
+            ...oldCart,
+            productsInCart: updatedProductsInCart,
+            totalCart: oldCart.totalCart - removedProductInCart.totalProduct,
           };
         });
       },
@@ -46,6 +81,7 @@ export const createDispatcher = () => {
 
   return {
     addProductToCart,
+    updateProductQuantityInCart,
     checkoutCart,
   };
 };

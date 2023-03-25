@@ -1,6 +1,9 @@
-import { Cart, ProductInCart } from '@/types/cart';
-import { formatPrice } from '@/utils';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+
+import { dispatcherState } from '@/store/atoms';
+import { ProductInCart } from '@/types/cart';
+import { formatPrice } from '@/utils';
 
 const Container = styled.li`
   width: 500px;
@@ -10,6 +13,10 @@ const Container = styled.li`
   border: 1px solid #fff;
 
   color: #fff;
+
+  p {
+    margin: 0;
+  }
 `;
 
 const ActionButtons = styled.div`
@@ -20,17 +27,27 @@ const ActionButtons = styled.div`
 `;
 
 const CartItem = ({ productInCart }: { productInCart: ProductInCart }) => {
+  const dispatcher = useRecoilValue(dispatcherState);
   const price = formatPrice(productInCart.totalProduct);
+  const productUnitPrice = formatPrice(productInCart.item.price);
+
+  const onHandleChangeProductQuantityInCart = (isAdding: boolean) => {
+    dispatcher?.updateProductQuantityInCart(productInCart, isAdding);
+  };
 
   return (
     <Container>
-      <span>{productInCart.name}</span>
+      <p>
+        {productInCart.item.title} - <span>{productUnitPrice}</span>
+      </p>
       <span>Quantity: {productInCart.quantity}</span>
-      <span>{price}</span>
+      <span>
+        Total Product: <b>{price}</b>
+      </span>
 
       <ActionButtons>
-        <button>+</button>
-        <button>-</button>
+        <button onClick={() => onHandleChangeProductQuantityInCart(true)}>+</button>
+        <button onClick={() => onHandleChangeProductQuantityInCart(false)}>-</button>
       </ActionButtons>
     </Container>
   );

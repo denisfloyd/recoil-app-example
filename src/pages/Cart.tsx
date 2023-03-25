@@ -25,8 +25,8 @@ const Cart = () => {
     <Container>
       <h1>Total Cart: {totalCartPrice}</h1>
       <ul>
-        {Object.values(cart.products).map(product => (
-          <CartItem key={product.name} productInCart={product} />
+        {Object.values(cart.productsInCart).map(product => (
+          <CartItem key={product.item.id} productInCart={product} />
         ))}
       </ul>
 

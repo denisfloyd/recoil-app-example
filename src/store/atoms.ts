@@ -12,7 +12,7 @@ export const productsState = atom<Product[]>({
 export const cartState = atom<Cart>({
   key: 'cartState',
   default: {
-    products: {},
+    productsInCart: {},
     totalCart: 0,
   },
 });
