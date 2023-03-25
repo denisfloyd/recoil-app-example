@@ -36,6 +36,6 @@ describe('Cart (Integration)', () => {
   it('should render products added in cart', () => {
     render(<Cart />, initRecoilState);
 
-    screen.debug();
+    expect(screen.getByText(/Product 1/i)).toBeInTheDocument();
   });
 });
