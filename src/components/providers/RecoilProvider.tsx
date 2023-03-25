@@ -1,6 +1,12 @@
-import { RecoilRoot } from 'recoil';
+import { MutableSnapshot, RecoilRoot } from 'recoil';
 
-const RecoilProvider = ({ children, initRecoilState }) => {
+const RecoilProvider = ({
+  children,
+  initRecoilState,
+}: {
+  children: React.ReactNode;
+  initRecoilState?: (mutatbleSnapshot: MutableSnapshot) => void;
+}) => {
   return <RecoilRoot initializeState={initRecoilState}>{children}</RecoilRoot>;
 };
 
