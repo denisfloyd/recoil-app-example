@@ -1,39 +1,33 @@
 import { render, screen } from '@/tests/test-utils';
 import Products from './Products';
 
-// jest.mock('axios', () => ({
-//   ...jest.requireActual('axios'),
-//   create: jest.fn(),
-// }));
-
-// jest.mock('')
-
-jest.mock('@/services/api');
-const axiosMock = jest.requireMock('@/services/api');
-
-describe('Products (Integration)', () => {
-  it('should do ', () => {
-    jest.spyOn(axiosMock, 'api').mockImplementation(() => {
-      return {
-        get: Promise.resolve([
+jest.mock('@/services/api', () => ({
+  api: {
+    get: () =>
+      Promise.resolve({
+        data: [
           {
             id: 1,
-            title: 'Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops',
-            price: 109.95,
-            description:
-              'Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday',
-            category: "men's clothing",
-            image: 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg',
-            rating: {
-              rate: 3.9,
-              count: 120,
-            },
+            title: 'Product 1',
+            price: 100,
           },
-        ]),
-      };
-    });
+          {
+            id: 2,
+            title: 'Product 2',
+            price: 200,
+          },
+        ],
+      }),
+  },
+}));
+
+describe('Products (Integration)', () => {
+  it('should render products in list', async () => {
     render(<Products />);
 
-    screen.debug();
+    expect(await screen.findByText('Product 1')).toBeInTheDocument();
+    expect(screen.getByText(/100.00/i)).toBeInTheDocument();
+    expect(screen.getByText('Product 2')).toBeInTheDocument();
+    expect(screen.getByText(/200.00/i)).toBeInTheDocument();
   });
 });
