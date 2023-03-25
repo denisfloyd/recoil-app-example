@@ -83,6 +83,7 @@ export const createDispatcher = () => {
     addProductToCart,
     updateProductQuantityInCart,
     checkoutCart,
+    removeProductInCart,
   };
 };
 

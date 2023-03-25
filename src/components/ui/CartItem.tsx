@@ -6,6 +6,7 @@ import { ProductInCart } from '@/types/cart';
 import { formatPrice } from '@/utils';
 
 const Container = styled.li`
+  position: relative;
   width: 500px;
   display: flex;
   padding: 20px;
@@ -26,14 +27,26 @@ const ActionButtons = styled.div`
   gap: 10px;
 `;
 
+const RemoveButton = styled.button`
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: transparent;
+  padding: 5px;
+`;
+
 const CartItem = ({ productInCart }: { productInCart: ProductInCart }) => {
   const dispatcher = useRecoilValue(dispatcherState);
   const price = formatPrice(productInCart.totalProduct);
   const productUnitPrice = formatPrice(productInCart.item.price);
 
-  const onHandleChangeProductQuantityInCart = (isAdding: boolean) => {
+  const handleChangeProductQuantityInCart = (isAdding: boolean) => {
     dispatcher?.updateProductQuantityInCart(productInCart, isAdding);
   };
+
+  const handleRemoveProductFromCart = () => {
+    dispatcher?.removeProductInCart(productInCart.item.id)
+  }
 
   return (
     <Container>
@@ -46,9 +59,11 @@ const CartItem = ({ productInCart }: { productInCart: ProductInCart }) => {
       </span>
 
       <ActionButtons>
-        <button onClick={() => onHandleChangeProductQuantityInCart(true)}>+</button>
-        <button onClick={() => onHandleChangeProductQuantityInCart(false)}>-</button>
+        <button onClick={() => handleChangeProductQuantityInCart(true)}>+</button>
+        <button onClick={() => handleChangeProductQuantityInCart(false)}>-</button>
       </ActionButtons>
+
+      <RemoveButton onClick={handleRemoveProductFromCart} data-testid={`remove-product-${productInCart.item.id}`}>X</RemoveButton>
     </Container>
   );
 };
