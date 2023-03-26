@@ -59,11 +59,26 @@ const CartItem = ({ productInCart }: { productInCart: ProductInCart }) => {
       </span>
 
       <ActionButtons>
-        <button onClick={() => handleChangeProductQuantityInCart(true)}>+</button>
-        <button onClick={() => handleChangeProductQuantityInCart(false)}>-</button>
+        <button
+          data-testid={`product-${productInCart.item.id}-augment-quantity`}
+          onClick={() => handleChangeProductQuantityInCart(true)}
+        >
+          +
+        </button>
+        <button
+          data-testid={`product-${productInCart.item.id}-decrease-quantity`}
+          onClick={() => handleChangeProductQuantityInCart(false)}
+        >
+          -
+        </button>
       </ActionButtons>
 
-      <RemoveButton onClick={handleRemoveProductFromCart} data-testid={`remove-product-${productInCart.item.id}`}>X</RemoveButton>
+      <RemoveButton
+        onClick={handleRemoveProductFromCart}
+        data-testid={`remove-product-${productInCart.item.id}`}
+      >
+        X
+      </RemoveButton>
     </Container>
   );
 };

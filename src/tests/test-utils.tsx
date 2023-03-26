@@ -4,13 +4,16 @@ import { render, RenderOptions } from '@testing-library/react';
 import { MutableSnapshot } from 'recoil';
 import QueryProvider from '@/components/providers/QueryProvider';
 import RecoilProvider from '@/components/providers/RecoilProvider';
+import { CartDispatchProvider } from '@/hooks/useCartDispatch';
 
 const wrapper: FC<{
   children: React.ReactNode;
   initRecoilState?: (mutablesnapshot: MutableSnapshot) => void;
 }> = ({ children, initRecoilState }) => (
   <QueryProvider>
-    <RecoilProvider initRecoilState={initRecoilState}>{children}</RecoilProvider>
+    <RecoilProvider initRecoilState={initRecoilState}>
+      <CartDispatchProvider>{children}</CartDispatchProvider>
+    </RecoilProvider>
   </QueryProvider>
 );
 
