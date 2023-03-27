@@ -1,12 +1,5 @@
 import { MutableSnapshot } from 'recoil';
-import {
-  fireEvent,
-  getAllByRole,
-  render,
-  screen,
-  waitForElementToBeRemoved,
-  within,
-} from '@/tests/test-utils';
+import { fireEvent, render, screen, waitForElementToBeRemoved, within } from '@/tests/test-utils';
 
 import { cartState } from '@/store/atoms';
 import Cart from './Cart';
@@ -114,5 +107,28 @@ describe('Cart (Integration)', () => {
 
     await waitForElementToBeRemoved(() => screen.getByTestId('product-1-decrease-quantity'));
     expect(screen.queryByText(/product 1 \-/i)).not.toBeInTheDocument();
+  });
+
+  it('should remove a product from cart', async () => {
+    render(<Cart />, initRecoilState);
+
+    fireEvent.click(screen.getByTestId('remove-product-1'));
+
+    await waitForElementToBeRemoved(() => screen.getByTestId('product-1-decrease-quantity'));
+    expect(screen.queryByText(/product 1 \-/i)).not.toBeInTheDocument();
+  });
+
+  it('should be able to do cart checkout', async () => {
+    render(<Cart />, initRecoilState);
+
+    fireEvent.click(screen.getByRole('button', { name: /checkout/i }));
+
+    expect(screen.queryByText(/product 1 \-/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/product 2 \-/i)).not.toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', {
+        name: /total cart: r\$0\.00/i,
+      }),
+    ).toBeInTheDocument();
   });
 });
