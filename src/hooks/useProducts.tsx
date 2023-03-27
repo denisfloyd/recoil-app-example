@@ -1,19 +1,15 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
-import { SetterOrUpdater } from 'recoil';
 import { api } from '@/services/api';
 import { Product } from '@/types/product';
 
-const getProducts = async (dispatch: SetterOrUpdater<Product[]>) => {
+const getProducts = async () => {
   const { data: products } = await api.get<AxiosResponse<Product[]>>('/products');
-  dispatch(() => products);
   return products;
 };
 
-export default function useProducts(
-  dispatch: SetterOrUpdater<Product[]>,
-): UseQueryResult<Product[], unknown> {
-  return useQuery(['products'], () => getProducts(dispatch), {
+export default function useProducts(): UseQueryResult<Product[], unknown> {
+  return useQuery(['products'], getProducts, {
     refetchOnWindowFocus: false,
     refetchOnMount: false,
     refetchIntervalInBackground: false,

@@ -60,7 +60,10 @@ const ProductItem = ({ product }: Props) => {
   const handleAddProductToCart = () => dispatcher?.addProductToCart(product);
 
   return (
-    <Container isHighlighted={product.quantityInCart > 0}>
+    <Container
+      data-testid={`product-item-${product.id}`}
+      isHighlighted={product.quantityInCart > 0}
+    >
       <h3>{product.title}</h3>
       <p className="cart-quantity">
         In Cart: <span>{product.quantityInCart}</span>

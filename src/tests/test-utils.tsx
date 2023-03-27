@@ -11,7 +11,7 @@ const wrapper: FC<{
   initRecoilState?: (mutablesnapshot: MutableSnapshot) => void;
 }> = ({ children, initRecoilState }) => (
   <QueryProvider>
-    <RecoilProvider initRecoilState={initRecoilState}>
+    <RecoilProvider {...(initRecoilState ? { initRecoilState } : {})}>
       <CartDispatchProvider>{children}</CartDispatchProvider>
     </RecoilProvider>
   </QueryProvider>

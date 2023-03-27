@@ -20,9 +20,3 @@ export function CartDispatchProvider({ children }: Props): JSX.Element {
 
   return <CartDispatchContext.Provider value={{}}>{children}</CartDispatchContext.Provider>;
 }
-
-export function useCartDispatch() {
-  const context = useContext(CartDispatchContext);
-
-  return context;
-}

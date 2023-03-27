@@ -5,6 +5,8 @@ import ProductItem from '@/components/ui/ProductItem';
 import useProducts from '@/hooks/useProducts';
 import { productsState } from '@/store/atoms';
 import { productsListMergedWithCartState } from '@/store/selectors';
+import { useEffect } from 'react';
+import { Product } from '@/types/product';
 
 const Container = styled.section`
   display: grid;
@@ -15,7 +17,13 @@ const Container = styled.section`
 const Products = () => {
   const setProducts = useSetRecoilState(productsState);
   const { products } = useRecoilValue(productsListMergedWithCartState);
-  const { isFetching } = useProducts(setProducts);
+  const { data, isFetching } = useProducts();
+
+  useEffect(() => {
+    if (data && !isFetching) {
+      setProducts(data);
+    }
+  }, [isFetching]);
 
   return (
     <Container>
