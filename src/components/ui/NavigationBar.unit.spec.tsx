@@ -15,30 +15,32 @@ const renderComponent = (initialEntries = ['/']) => {
   );
 };
 
-it('should render the "Go To Cart" anchor at products page', async () => {
-  renderComponent();
+describe('Navigation Bar (Unit)', () => {
+  it('should render the "Go To Cart" anchor at products page', async () => {
+    renderComponent();
 
-  expect(screen.getByRole('link', { name: 'Go to Cart' })).toBeInTheDocument();
-});
+    expect(screen.getByRole('link', { name: 'Go to Cart' })).toBeInTheDocument();
+  });
 
-it('should be able to click to go to cart page from products page', () => {
-  renderComponent();
+  it('should be able to click to go to cart page from products page', () => {
+    renderComponent();
 
-  fireEvent.click(screen.getByRole('link', { name: 'Go to Cart' }));
+    fireEvent.click(screen.getByRole('link', { name: 'Go to Cart' }));
 
-  expect(screen.getByRole('link', { name: 'back' })).toBeInTheDocument();
-});
+    expect(screen.getByRole('link', { name: 'back' })).toBeInTheDocument();
+  });
 
-it('should render the "Back" anchor at cart page', async () => {
-  renderComponent(['/cart']);
+  it('should render the "Back" anchor at cart page', async () => {
+    renderComponent(['/cart']);
 
-  expect(screen.getByRole('link', { name: 'back' })).toBeInTheDocument();
-});
+    expect(screen.getByRole('link', { name: 'back' })).toBeInTheDocument();
+  });
 
-it('should be able to go back to products page from cart page', () => {
-  renderComponent(['/cart']);
+  it('should be able to go back to products page from cart page', () => {
+    renderComponent(['/cart']);
 
-  fireEvent.click(screen.getByRole('link', { name: 'back' }));
+    fireEvent.click(screen.getByRole('link', { name: 'back' }));
 
-  expect(screen.getByRole('link', { name: 'Go to Cart' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Go to Cart' })).toBeInTheDocument();
+  });
 });
