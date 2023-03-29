@@ -77,7 +77,7 @@ $ yarn test:coverage
 
 # :bug: Issues
 
-Feel free to **file a new issue** with a respective title and description on the the [Todo With Tests](https://github.com/denismend/recoil-app-example/issues) repository. If you already found a solution to your problem, **i would love to review your pull request**!
+Feel free to **file a new issue** with a respective title and description on the the [Todo With Tests](https://github.com/denisfloyd/recoil-app-example/issues) repository. If you already found a solution to your problem, **i would love to review your pull request**!
 
 # :tada: Contributing
 
