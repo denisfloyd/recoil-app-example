@@ -2,11 +2,6 @@ import { fireEvent, render, screen } from '@/tests/test-utils';
 import { MemoryRouter } from 'react-router-dom';
 import NavigationBar from './NavigationBar';
 
-jest.mock('react-router-dom', () => ({
-  __esModule: true,
-  ...jest.requireActual('react-router-dom'),
-}));
-
 const renderComponent = (initialEntries = ['/']) => {
   render(
     <MemoryRouter initialEntries={initialEntries}>
